@@ -1,14 +1,17 @@
 package team.remember.controller;
 
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import team.remember.auth.PrincipalDetails;
 import team.remember.domain.Users;
 import team.remember.dto.MyPageUsersDto;
 import team.remember.dto.TimerDto;
+import team.remember.repository.UsersRepository;
 import team.remember.service.TimerService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -17,6 +20,10 @@ public class HomePageController {
 
     @Autowired
     private TimerService timerService;
+
+    @Autowired
+    private UsersRepository usersRepository;
+
 
     /**
      * HTTP GET 요청을 통해 MyPage의 정보들을 생성.
@@ -30,11 +37,12 @@ public class HomePageController {
     @ResponseStatus(value = HttpStatus.OK)
     public MyPageUsersDto getHomePageData(@AuthenticationPrincipal PrincipalDetails principalDetails){
 
-        Users currentUser = principalDetails.getUser();
+        Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
 
         return new MyPageUsersDto(currentUser.getContinuousNumOfExerciseDays(),currentUser.getLevel(), currentUser.getTodayExerciseTime(),currentUser.isCurrentlyExercise());
 
     }
+
 
     /**
      * HTTP POST 요청을 통해 MyPage의 Timer에 대해서 시작할지 멈출지 판단함.
@@ -43,7 +51,7 @@ public class HomePageController {
      * @return 시작 신호는 "start" 멈춤 신호는 "pause" 유지 신호는 "maintain"으로 전달된다.
      *
      */
-    @RequestMapping(value = "/api/startBtn", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/startBtn", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseStatus(value = HttpStatus.OK)
     public TimerDto touchStart(@AuthenticationPrincipal PrincipalDetails principalDetails){
         Users currentUser = principalDetails.getUser();
@@ -61,10 +69,13 @@ public class HomePageController {
      *
      */
 
-    @RequestMapping(value = "/api/pauseBtn", method = RequestMethod.POST)
+    //??
+    @RequestMapping(value = "/api/pauseBtn", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public TimerDto touchPause(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam("time") String timerTime){
+
         Users currentUser = principalDetails.getUser();
+
 
         return timerService.timerPause(currentUser, timerTime);
     }

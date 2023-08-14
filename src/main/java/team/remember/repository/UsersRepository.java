@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import team.remember.domain.Users;
 
 @Repository
-public interface UsersRepository extends JpaRepository<Users, String> {
+public interface UsersRepository extends JpaRepository<Users, Long> {
     public Users findByEmail(String email);
 }

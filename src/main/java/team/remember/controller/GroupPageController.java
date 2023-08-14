@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import team.remember.auth.PrincipalDetails;
 import team.remember.domain.Users;
+import team.remember.domain.exerciseRecord;
+import team.remember.dto.ExerciseRecordDto;
 import team.remember.dto.GroupPageDto;
+import team.remember.dto.MyPageDto;
 import team.remember.dto.MyPageUsersDto;
 import team.remember.repository.UsersRepository;
 
@@ -26,10 +29,14 @@ public class GroupPageController {
     @RequestMapping(value = "/api/GroupPageData", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public List<GroupPageDto> getGroupPageData(@AuthenticationPrincipal PrincipalDetails principalDetails){
-        Users currentUser = principalDetails.getUser();
+
+        Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
 
         List<String> friendEmails = currentUser.getFriendsEmail();
         List<GroupPageDto> groupPageData = new ArrayList<>();
+
+        if(friendEmails == null)
+            return null;
 
         for (String email:friendEmails) {
 
@@ -43,15 +50,44 @@ public class GroupPageController {
 
     }
 
-    @RequestMapping(value = "/api/GroupPageAddFriend", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/GroupPageAddFriend", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseStatus(value = HttpStatus.OK)
     @Transactional
     public void groupPageAddFriend(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestParam("email") String addEmail){
 
-        Users currentUser = principalDetails.getUser();
+        Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
+        if(currentUser == null)
+            return;
+
         currentUser.getFriendsEmail().add(addEmail);
 
     }
+
+    @RequestMapping(value = "/api/GroupPageToFriendPageData", method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseStatus(value = HttpStatus.OK)
+    public MyPageDto friendPageData(@RequestParam("email") String email){
+
+        Users currentUser = usersRepository.findByEmail(email);
+
+        List<ExerciseRecordDto> exerciseRecord = new ArrayList<>();
+
+        if(currentUser.getExerciseRecord() != null){
+
+            for (team.remember.domain.exerciseRecord c : currentUser.getExerciseRecord()) {
+                ExerciseRecordDto exerciseRecordDto = new ExerciseRecordDto();
+                exerciseRecordDto.setExerciseType(c.getExerciseType());
+                exerciseRecordDto.setSett(c.getSett());
+
+                exerciseRecord.add(exerciseRecordDto);
+
+            }
+        }
+
+        return new MyPageDto(currentUser.getNickName(), currentUser.getIntroduction(), currentUser.getLevel() , currentUser.getWeight(), currentUser.getMuscleMass(), currentUser.getFatMass(),exerciseRecord);
+
+    }
+
+
 
 
 }

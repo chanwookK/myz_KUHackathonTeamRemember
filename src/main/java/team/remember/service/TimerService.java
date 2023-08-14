@@ -1,19 +1,30 @@
 package team.remember.service;
 
 
+import org.apache.catalina.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team.remember.auth.PrincipalDetails;
 import team.remember.domain.Users;
 import team.remember.dto.TimerDto;
+import team.remember.repository.UsersRepository;
 
+import javax.persistence.EntityManager;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+
 @Service
 public class TimerService {
+    @Autowired
+    private EntityManager em;
 
-    private boolean extractLastTwoDigits(String timeString) {
+    @Autowired
+    private UsersRepository usersRepository;
+
+
+    public static boolean extractLastTwoDigits(String timeString) {
         // 시간 문자열을 ":" 기준으로 분리
         String[] parts = timeString.split(":");
 
@@ -24,7 +35,7 @@ public class TimerService {
         return (Integer.parseInt(firstPart) > 0) || (Integer.parseInt(secondPart) >= 30);
     }
 
-    private String addTwoTimeString(String time1, String time2){
+    public static String addTwoTimeString(String time1, String time2){
 
         //포맷 지정
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -47,8 +58,11 @@ public class TimerService {
     @Transactional
     public TimerDto timerStart(Users user){
 
-        if(!user.isCurrentlyExercise()){
-            user.setCurrentlyExercise(true);
+        Users currentUser = usersRepository.findByEmail(user.getEmail());
+
+        if(!currentUser.isCurrentlyExercise()){
+            currentUser.setCurrentlyExercise(true);
+            em.flush();
             return new TimerDto("start");
 
         }
@@ -65,18 +79,22 @@ public class TimerService {
     @Transactional
     public TimerDto timerPause(Users user, String timerTime){
 
-        if(!user.isCurrentlyExercise()){
+        Users currentUser = usersRepository.findByEmail(user.getEmail());
+
+        if(!currentUser.isCurrentlyExercise()){
             return new TimerDto("maintain");
 
         }
         // 만약 30분보다 운동을 오래 했을 경우 유저의 오늘 운동을 true로 설정한다.
         if(extractLastTwoDigits(timerTime)){
-            user.setTodayExercise(true);
+            currentUser.setTodayExercise(true);
+            em.flush();
         }
 
         //현재 운동상태를 false로 설정하고, 오늘의 운동 시간을 재설정한다.
-        user.setCurrentlyExercise(false);
-        user.setTodayExerciseTime(timerTime);
+        currentUser.setCurrentlyExercise(false);
+        currentUser.setTodayExerciseTime(timerTime);
+        em.flush();
         return new TimerDto("pause");
 
     }

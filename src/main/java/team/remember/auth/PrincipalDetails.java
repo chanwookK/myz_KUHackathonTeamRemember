@@ -27,7 +27,7 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return user.getRealName();
     }
 
     @Override

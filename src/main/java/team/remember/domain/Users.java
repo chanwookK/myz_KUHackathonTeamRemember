@@ -7,10 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.minidev.json.JSONObject;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -32,6 +29,10 @@ public class Users {
 
 
     @Id
+    @GeneratedValue
+    private Long id;
+
+    @Column(unique = true)
     private String email;  //이메일
     private String realName; //사용자 이름
     private String nickName; //닉네임
