@@ -7,4 +7,5 @@ import team.remember.domain.Users;
 @Repository
 public interface UsersRepository extends JpaRepository<Users, Long> {
     public Users findByEmail(String email);
+    public Users findByRealName(String realName);
 }

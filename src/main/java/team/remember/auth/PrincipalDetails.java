@@ -20,9 +20,12 @@ public class PrincipalDetails implements OAuth2User, UserDetails {
         this.user = user;
         this.attributes = attributes;
     }
+    public PrincipalDetails(Users user){
+        this.user = user;
+    }
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override

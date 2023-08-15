@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import net.minidev.json.JSONObject;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,10 +41,12 @@ public class Users {
     private String introduction; //한줄소개
 
     private String totalExerciseTime; //총 운동시간
-    private String aerobicExerciseTime; //유산소 운동시간
     private String todayExerciseTime; //오늘 운동시간
     private int continuousNumOfExerciseDays; //연속 운동 일수
     private int totalNumOfExerciseDays; //총 운동 일수
+
+
+    private String password; //유산소 운동시간
 
     private boolean currentlyExercise = false;
     private boolean todayExercise = false;
@@ -54,7 +57,7 @@ public class Users {
 
 
     @ElementCollection
-    private List<String> friendsEmail; //친구 이메일 FK
+    private List<String> friendsEmail = new ArrayList<>(); //친구 이메일 FK
 
 
     private int weight; //체중
