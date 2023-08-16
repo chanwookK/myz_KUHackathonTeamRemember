@@ -39,6 +39,5 @@ React, Spring Boot 기반 웹 서비스​
 타이머 현황 실시간 공유
 
 
-
 <img src='https://github.com/chanwookK/teamRemember/assets/114604267/931db599-6614-471b-b70f-ac126c471ab0'/>
 
