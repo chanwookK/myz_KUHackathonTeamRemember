@@ -2,7 +2,6 @@
 제1회 건국대학교 해커톤 오케스트라: 우리들의 1악장 프로젝트       
 
 함께하는 운동,​ 기록하고 공유하는 피트니스 서비스
-<img src='https://github.com/chanwookK/teamRemember/assets/114604267/931db599-6614-471b-b70f-ac126c471ab0'/>
 
 ## 기능 목차
 - Healthy 타이머
@@ -38,4 +37,8 @@
 React, Spring Boot 기반 웹 서비스​   
 구글 oAuth를 활용한 간편로그인 제공​   
 타이머 현황 실시간 공유
-<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white"/>
+
+
+
+<img src='https://github.com/chanwookK/teamRemember/assets/114604267/931db599-6614-471b-b70f-ac126c471ab0'/>
+
