@@ -16,7 +16,7 @@ import team.remember.repository.UsersRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class MyPageController {
 

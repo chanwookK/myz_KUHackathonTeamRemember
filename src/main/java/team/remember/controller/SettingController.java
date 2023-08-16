@@ -11,7 +11,7 @@ import team.remember.domain.Users;
 import team.remember.dto.MyPageUsersDto;
 import team.remember.repository.UsersRepository;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class SettingController {
 

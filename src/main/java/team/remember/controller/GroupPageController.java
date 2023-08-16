@@ -18,7 +18,7 @@ import team.remember.repository.UsersRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class GroupPageController {
 
@@ -31,6 +31,7 @@ public class GroupPageController {
     public List<GroupPageDto> getGroupPageData(@AuthenticationPrincipal PrincipalDetails principalDetails){
 
         Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
+
 
         List<String> friendEmails = currentUser.getFriendsEmail();
         List<GroupPageDto> groupPageData = new ArrayList<>();

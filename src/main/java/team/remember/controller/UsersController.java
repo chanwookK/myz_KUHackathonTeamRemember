@@ -13,7 +13,7 @@ import team.remember.domain.Users;
 import team.remember.repository.UsersRepository;
 
 @Controller
-public class UsersController {
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")public class UsersController {
 
 
     @Autowired
@@ -51,7 +51,7 @@ public class UsersController {
         System.out.println(user);
 
         usersRepository.save(user); //회원가입 잘됨. 비밀번호 : 1234 => 시큐리티로 로그인을 할 수 없음. 이유는 패스워드가 암호화가 안되어 있기 때문
-        return "redirect:/loginForm";
+        return "redirect:/http://localhost:3000";
     }
 
     /*

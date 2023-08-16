@@ -14,7 +14,7 @@ import team.remember.dto.TimerDto;
 import team.remember.repository.UsersRepository;
 import team.remember.service.TimerService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 @RestController
 public class HomePageController {
 
@@ -36,11 +36,17 @@ public class HomePageController {
     @RequestMapping(value = "/api/HomePageData", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.OK)
     public MyPageUsersDto getHomePageData(@AuthenticationPrincipal PrincipalDetails principalDetails){
+        if(principalDetails == null){
+            System.out.println("Cookie is null");
+            return null;
+        }
+        else {
+            Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
 
-        Users currentUser = usersRepository.findByEmail(principalDetails.getUser().getEmail());
 
-        return new MyPageUsersDto(currentUser.getContinuousNumOfExerciseDays(),currentUser.getLevel(), currentUser.getTodayExerciseTime(),currentUser.isCurrentlyExercise());
+            return new MyPageUsersDto(currentUser.getContinuousNumOfExerciseDays(), currentUser.getLevel(), currentUser.getTodayExerciseTime(), currentUser.isCurrentlyExercise());
 
+        }
     }
 
 

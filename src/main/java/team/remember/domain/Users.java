@@ -18,7 +18,7 @@ public class Users {
 
 
     @Builder
-    public Users(String email, String realName, String nickName, int level, int continuousNumOfExerciseDays, int totalNumOfExerciseDays, String provider) {
+    public Users(String email, String realName, String nickName, int level, int continuousNumOfExerciseDays, int totalNumOfExerciseDays, String provider, String password) {
         this.email = email;
         this.realName = realName;
         this.nickName = nickName;
@@ -26,6 +26,7 @@ public class Users {
         this.continuousNumOfExerciseDays = continuousNumOfExerciseDays;
         this.totalNumOfExerciseDays = totalNumOfExerciseDays;
         this.provider = provider;
+        this.password = password;
     }
 
 
