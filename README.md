@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/logo.png" width="125"/>
+  <img src="https://github.com/chanwookK/teamRemember/blob/main/assets/logo.png" width="125"/>
 </p>
 <p align="center">함께하는 운동,​ 기록하고 공유하는 피트니스 서비스, <strong>MyZ(마이짐)</strong><br/>제1회 건국대학교 해커톤 오케스트라: 우리들의 1악장 출품작</p>
 
@@ -20,7 +20,7 @@
 ## 기능 소개
 
 <p align="center">
-  <img src="./assets/demo.png"/>
+  <img src="https://github.com/chanwookK/teamRemember/raw/main/assets/demo.png"/>
 </p>
 
 ### 1. Healthy 타이머
