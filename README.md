@@ -40,3 +40,6 @@
 React, Spring Boot 기반 웹 서비스​   
 구글 oAuth를 활용한 간편로그인 제공​   
 타이머 현황 실시간 공유
+
+![image](https://github.com/user-attachments/assets/4759ac74-34e8-4ba7-97a6-bfbabf677f02)
+
